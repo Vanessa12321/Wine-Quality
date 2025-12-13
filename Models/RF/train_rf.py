@@ -77,7 +77,6 @@ def main():
 
     df = load_csv(args.data, args.sep)
 
-    # 可选：drop 一些无意义列（比如 dataframe 导出时带的 index）
     if args.drop_cols.strip():
         drop_list = [c.strip() for c in args.drop_cols.split(",") if c.strip()]
         exist = [c for c in drop_list if c in df.columns]
@@ -87,17 +86,13 @@ def main():
     if args.target_col not in df.columns:
         raise ValueError(f"target_col '{args.target_col}' not found. columns={df.columns.tolist()}")
 
-    # “data cleaning”检查：缺失值/重复行
     missing = int(df.isna().sum().sum())
     dup = int(df.duplicated().sum())
 
-    # 取特征和标签
     X = df.drop(columns=[args.target_col]).copy()
     y_raw = df[args.target_col].values
     y, label_names = make_labels(y_raw, args.label_mode)
 
-    # 确保特征是数值（避免字符串列导致 RF 报错）
-    # 若有非数值列：尝试转成数值，转不动的变成 NaN 再填充（这里用中位数）
     X = X.apply(pd.to_numeric, errors="coerce")
     if X.isna().sum().sum() > 0:
         X = X.fillna(X.median(numeric_only=True))
@@ -109,7 +104,6 @@ def main():
         stratify=y
     )
 
-    # baseline RF（额外措施：class_weight 处理不均衡）
     base = RandomForestClassifier(
         n_estimators=500,
         random_state=args.seed,
@@ -119,7 +113,7 @@ def main():
     model = base
 
     if args.tune:
-        # tuning + regularization 参数（控制过拟合）
+        # tuning + regularization parameters
         param_dist = {
             "n_estimators": [300, 500, 800, 1200],
             "max_depth": [None, 6, 8, 10, 12, 16],
@@ -136,7 +130,7 @@ def main():
             estimator=base,
             param_distributions=param_dist,
             n_iter=args.n_iter,
-            scoring="f1_macro",   # 不均衡时更合适
+            scoring="f1_macro",   
             cv=cv,
             random_state=args.seed,
             n_jobs=-1,
