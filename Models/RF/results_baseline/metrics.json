@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.75,
+  "balanced_accuracy": 0.723625851932782,
+  "f1_macro": 0.738635411429529,
+  "f1_weighted": 0.7488436400201106,
+  "label_mode": "3class",
+  "missing_values_total": 0,
+  "duplicate_rows": 240,
+  "n_train": 1279,
+  "n_test": 320,
+  "train_class_counts": {
+    "0": 595,
+    "1": 510,
+    "2": 174
+  },
+  "test_class_counts": {
+    "0": 149,
+    "1": 128,
+    "2": 43
+  }
+}
