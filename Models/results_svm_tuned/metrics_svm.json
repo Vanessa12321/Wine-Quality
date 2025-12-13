@@ -1,0 +1,30 @@
+{
+  "basic": {
+    "model": "SVM_RBF_basic",
+    "accuracy": 0.690625,
+    "precision_macro": 0.7198900027847396,
+    "recall_macro": 0.6175212007699912,
+    "f1_macro": 0.6437499999999999
+  },
+  "tuned": {
+    "model": "SVM_RBF_tuned",
+    "accuracy": 0.684375,
+    "precision_macro": 0.6925911298886951,
+    "recall_macro": 0.6810690455751521,
+    "f1_macro": 0.6838211389812106
+  },
+  "linear": {
+    "model": "SVM_linear_basic",
+    "accuracy": 0.61875,
+    "precision_macro": 0.4059186580155088,
+    "recall_macro": 0.4701132550335571,
+    "f1_macro": 0.43551931136028993
+  },
+  "balanced": {
+    "model": "SVM_RBF_balanced",
+    "accuracy": 0.65,
+    "precision_macro": 0.6178876574784503,
+    "recall_macro": 0.6899257322719942,
+    "f1_macro": 0.6325996523774052
+  }
+}
